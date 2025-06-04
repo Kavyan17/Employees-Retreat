@@ -1,0 +1,58 @@
+body {
+    margin: 0;
+    font-family: 'Comic Sans MS', cursive;
+    background: linear-gradient(to right, #ff69b4, #ff1493);
+    color: #fff;
+  }
+  
+  .container {
+    padding: 2rem;
+    text-align: center;
+  }
+  
+  .center {
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+    justify-content: center;
+    align-items: center;
+  }
+  
+  button {
+    background-color: #fff;
+    color: #ff1493;
+    border: none;
+    padding: 0.6rem 1rem;
+    margin: 0.5rem;
+    border-radius: 10px;
+    font-weight: bold;
+    cursor: pointer;
+  }
+  
+  input {
+    padding: 0.5rem;
+    border-radius: 5px;
+    border: none;
+    margin-right: 0.5rem;
+  }
+  
+  ul {
+    list-style: none;
+    padding: 0;
+  }
+  
+  li {
+    margin: 0.5rem 0;
+  }
+  
+  .form {
+    margin-top: 2rem;
+  }
+  
+  .start-button {
+    margin-top: 2rem;
+    background-color: #fff;
+    color: #ff1493;
+    font-size: 1.1rem;
+  }
+  
