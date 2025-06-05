@@ -12,6 +12,8 @@ def create_app():
 
     from app.routes.teams import teams_bp
     app.register_blueprint(teams_bp, url_prefix="/teams")
+    from app.routes.answers import answers_bp
+    app.register_blueprint(answers_bp, url_prefix="/answers")
 
     with app.app_context():
         db.create_all()
