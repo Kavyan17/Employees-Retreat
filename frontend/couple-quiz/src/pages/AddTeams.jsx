@@ -1,7 +1,10 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
+import { useNavigate } from 'react-router-dom';
+
 
 const AddTeams = () => {
+  const navigate = useNavigate();
   const [teams, setTeams] = useState([]);
   const [newTeam, setNewTeam] = useState("");
 
@@ -56,7 +59,9 @@ const AddTeams = () => {
         <button onClick={addTeam}>Add Team</button>
       </div>
 
-      <button className="start-button">Begin Game</button>
+      {/* <button className="start-button">Begin Game</button> */}
+      <button className="start-button" onClick={() => navigate("/flashcards", { state: { teams } })}> Begin Game </button>
+      
     </div>
   );
 };
