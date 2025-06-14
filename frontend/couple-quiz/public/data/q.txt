@@ -1,0 +1,51 @@
+id,category,question_text
+1,Getting to Know You,Where did you first meet?
+2,Getting to Know You,Where did you go on your first date?
+3,Getting to Know You,Who made the first move?
+4,Getting to Know You,Who said "I love you" first?
+5,Getting to Know You,What did your partner wear on your wedding day?
+6,Getting to Know You,What is your partner’s love language?
+7,Favorites,What is your partner’s favorite movie?
+8,Favorites,What is your partner’s favorite meal or dish?
+9,Favorites,What is your partner’s dream vacation destination?
+10,Favorites,What is your partner’s favorite holiday?
+11,Favorites,What is your partner’s favorite thing to do on a weekend?
+12,Favorites,What is your partner’s favorite dessert?
+13,Favorites,What is your partner’s favorite scent?
+14,Favorites,What is your partner’s favorite board game?
+15,Favorites,What is your partner’s favorite TV show?
+16,Favorites,What is your partner’s favorite alcoholic beverage?
+17,Favorites,What is your partner’s favorite sports team?
+18,Favorites,What is your partner’s go-to coffee or drink order?
+19,Favorites,What is your partner’s celebrity crush?
+20,Favorites,Does your partner prefer dogs or cats?
+21,Fun & Silly,What is your partner’s most annoying habit?
+22,Fun & Silly,What would your partner say is your most annoying habit?
+23,Fun & Silly,What is something your partner does that always makes you laugh?
+24,Fun & Silly,What is your partner’s weirdest habit?
+25,Fun & Silly,What is your partner most likely to splurge on?
+26,Fun & Silly,What reality TV show would your partner secretly love to be on?
+27,Fun & Silly,If your partner could only eat one food for the rest of their life, what would it be?
+28,Fun & Silly,Who is more likely to start a silly argument?
+29,Fun & Silly,What is your partner’s favorite physical feature on you?
+30,Fun & Silly,What song reminds your partner of you?
+31,Everyday Life,Who takes longer to get ready in the morning?
+32,Everyday Life,Who is the better cook?
+33,Everyday Life,Who is more organized?
+34,Everyday Life,Who is more likely to forget where they put their phone?
+35,Everyday Life,What chore does your partner absolutely hate?
+36,Everyday Life,What is your partner’s most prized possession?
+37,Everyday Life,What is your partner’s biggest fear?
+38,Everyday Life,What hobby does your partner spend the most on?
+39,This or That,Is your partner more of a morning person or a night owl?
+40,This or That,Does your partner prefer sweet or salty snacks?
+41,This or That,Would your partner rather go to the beach or the mountains?
+42,This or That,Is your partner more artistic or logical?
+43,Hypotheticals & Dreams,If your partner won $10,000, what’s the first thing they’d do?
+44,Hypotheticals & Dreams,If your partner could have dinner with any celebrity, who would it be?
+45,Hypotheticals & Dreams,What would your partner choose as a superpower?
+46,Hypotheticals & Dreams,What is your partner’s dream job or what did they want to be when they were young?
+47,Past & Memories,What was the name of your partner’s first pet?
+48,Past & Memories,What was your partner’s first car?
+49,Past & Memories,What is the happiest moment of your partner’s life?
+50,Past & Memories,What is your partner’s go-to karaoke song?

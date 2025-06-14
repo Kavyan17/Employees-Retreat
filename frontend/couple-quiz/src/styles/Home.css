@@ -1,27 +1,34 @@
 body {
-    margin: 0;
-    font-family: 'Comic Sans MS', cursive, sans-serif;
-    background: linear-gradient(to right, #ff69b4, #ff1493);
-    color: #fff;
-    animation: fadeIn 1s ease-in;
-    min-height: 100vh;
-    overflow-x: hidden;
-    align-items: center;
-  }
-  
-  .home-container {
-    display: flex;
-    flex-direction: column;
-    align-items: center; /* Add this */
-    min-height: 100vh;
-    text-align: center;
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-  }
-  
+  margin: 0;
+  font-family: 'Comic Sans MS', cursive, sans-serif;
+  background: linear-gradient(to right, #ff69b4, #ff1493);
+  color: #fff;
+  animation: fadeIn 1s ease-in;
+  min-height: 100vh;
+  display: flex;              /* Added */
+  justify-content: center;    /* Added */
+  align-items: center;        /* Already exists */
+  flex-direction: column;     /* Optional */
+  overflow-x: hidden;
+}
+
+.home-container {
+  overflow-x: hidden;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;    /* Add this */
+  position: relative;
+  min-height: 100vh;
+  width: 100%;
+  text-align: center;
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+}
+
   .home-header {
-    width: 100%;
+    width: 100vw;
     background: #ff1493;
     padding: 1rem;
     font-size: 1.8rem;
@@ -32,6 +39,7 @@ body {
   .home-main {
     flex-grow: 1;
     padding: 1rem 1rem; 
+    width: 100%;
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -61,7 +69,7 @@ body {
   }
   
   .home-footer {
-    width: 100%;
+    width: 100vw;
     padding: 1rem;
     font-size: 0.95rem;
     background-color: #ff69b4;
@@ -73,7 +81,7 @@ body {
     border: 2px solid #fff;
     border-radius: 16px;
     padding: 2rem 1.5rem;
-    margin: 2rem 1rem;
+    margin: 2.5rem 1rem;
     animation: fadeIn 1.5s ease-in-out;
     box-shadow: 0 8px 20px rgba(255, 255, 255, 0.2);
   }
@@ -90,6 +98,14 @@ body {
     color: #fff;
     opacity: 0.95;
   }  
+
+  .center-wrapper {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+  }
+  
   
   /* Animations */
   @keyframes fadeIn {
@@ -101,4 +117,43 @@ body {
     from { transform: translateY(40px); opacity: 0; }
     to { transform: translateY(0); opacity: 1; }
   }
+  
+  .floating-hearts {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    pointer-events: none;
+    z-index: 1;
+  }
+  
+  .heart {
+    position: absolute;
+    width: 32px;
+    height: 30px;
+    animation-name: fallHeart;
+    animation-timing-function: ease-in-out;
+    animation-iteration-count: infinite; /* Ensures infinite loop */
+  }
+
+  @keyframes fallHeart {
+    0% {
+      transform: translateY(-10vh) scale(1) rotate(0deg);
+      opacity: 0;     /* fully invisible */
+    }
+    5% {
+      opacity: 1;     /* fade in immediately after entering */
+    }
+    90% {
+      opacity: 1;
+    }
+    100% {
+      transform: translateY(110vh) scale(1.2) rotate(360deg);
+      opacity: 0;     /* fade out as it leaves */
+    }
+  }
+  
+  
   
