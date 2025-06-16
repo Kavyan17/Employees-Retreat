@@ -1,0 +1,304 @@
+body {
+    margin: 0;
+    font-family: 'Comic Sans MS', cursive, sans-serif;
+    background: linear-gradient(to right, #ff69b4, #ff1493);
+    color: #fff;
+    min-height: 100vh;
+    overflow-x: hidden;
+  }
+  
+  .addteams-container {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    min-height: 100vh;
+  }
+  
+  .addteams-header,
+  .addteams-footer {
+    width: 100vw;
+    padding: 1rem;
+    background-color: #ff1493;
+    text-align: center;
+    font-weight: bold;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.2);
+  }
+  
+  .addteams-footer {
+    background-color: #ff69b4;
+    box-shadow: 0 -2px 6px rgba(0,0,0,0.2);
+    font-size: 0.95rem;
+  }
+  
+  .addteams-main {
+    flex-grow: 1;
+    display: flex;
+    justify-content: space-between;
+    padding: 2rem;
+    justify-content: center; /* Center horizontally */
+    gap: 15rem;
+  }
+  
+  .team-form-section{
+    width: 30%;
+    background: rgba(255, 255, 255, 0.15);
+    padding: 2rem;
+    border-radius: 12px;
+    box-shadow: 0 8px 20px rgba(255, 255, 255, 0.2);
+  }
+
+  .team-form-section{
+    animation: neonRedPulse 3s ease-in-out infinite;
+    border: 2px solid #ff1a75;
+    background-color: #ff93b3;
+    padding: 1rem;
+    border-radius: 10px;
+    /* background-color: rgba(255, 255, 255, 0.05); */
+    margin-right: 10vw; /* Push it slightly left from far right */
+    max-height: 700px; /* Reduce height */
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+  }
+
+  .leaderboard-section {
+    width: 20%;
+    background: rgba(255, 255, 255, 0.15);
+    padding: 2rem;
+    border-radius: 12px;
+    box-shadow: 0 8px 20px rgba(255, 255, 255, 0.2);
+  }
+  
+  h2 {
+    margin-bottom: 1rem;
+    color: #fff;
+    text-align: center;
+  }
+  
+  .form {
+    display: flex;
+    gap: 0.5rem;
+    margin-bottom: 1rem;
+    justify-content: center;
+  }
+  
+  input[type="text"] {
+    padding: 0.5rem;
+    border-radius: 8px;
+    border: none;
+    font-family: inherit;
+    width: 60%;
+  }
+  
+  button {
+    padding: 0.5rem 1rem;
+    border: none;
+    border-radius: 8px;
+    background-color: #fff;
+    color: #ff1493;
+    font-weight: bold;
+    cursor: pointer;
+  }
+  
+  button:hover {
+    background-color: #ffe6f0;
+  }
+  
+  .team-list li,
+  .leaderboard-section ul li {
+    display: flex;
+    justify-content: space-between;
+    margin: 0.5rem 0;
+    padding: 0.5rem;
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 8px;
+  }
+  
+  .team-buttons button {
+    margin-left: 0.5rem;
+  }
+  
+  .start-button {
+    margin-top: 2rem;
+    background-color: #fff;
+    color: #ff1493;
+    font-weight: bold;
+    font-size: 1rem;
+  }
+  
+
+  .leaderboard-header {
+    display: flex;
+    justify-content: space-between;
+    font-weight: bold;
+    padding: 0.5rem 1rem;
+    border-bottom: 2px solid rgba(255, 255, 255, 0.4);
+    margin-bottom: 0.5rem;
+    color: #fff;
+  }
+  
+  .leaderboard-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+  
+  .leaderboard-list li {
+    display: flex;
+    justify-content: space-between;
+    padding: 0.5rem 1rem;
+    margin-bottom: 0.3rem;
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 6px;
+  }
+  
+  .team-col {
+    flex: 1.5;
+    text-align: left;
+  }
+  
+  .score-col {
+    flex: 0.5;
+    text-align: right;
+  }
+
+  /* @keyframes neonGlow {
+    0%, 100% {
+      box-shadow: 0 0 10px #ff1a75, 0 0 20px #ff1a75, 0 0 30px #ff1a75;
+      border-color: #ff1a75;
+      color: #ff66a3;
+    }
+    50% {
+      box-shadow: 0 0 20px #ff4da6, 0 0 40px #ff4da6, 0 0 60px #ff4da6;
+      border-color: #ff4da6;
+      color: #ff99cc;
+    }
+  }
+  
+  @keyframes neonBorderGlow {
+    0%, 100% {
+      box-shadow: 0 0 10px #ff1a75, 0 0 20px #ff1a75, 0 0 30px #ff1a75;
+      border-color: #ff1a75;
+    }
+    50% {
+      box-shadow: 0 0 20px #ff4da6, 0 0 40px #ff4da6, 0 0 60px #ff4da6;
+      border-color: #ff4da6;
+    }
+  } */
+
+  @keyframes neonRedPulse {
+    0%, 100% {
+      box-shadow: 0 0 5px #ff1a75, 0 0 10px #ff1a75, 0 0 15px #ff1a75;
+      border-color: #ff1a75;
+    }
+    50% {
+      box-shadow: 0 0 15px #ff1a75, 0 0 30px #ff1a75, 0 0 45px #ff1a75;
+      border-color: #ff1a75;
+    }
+  }  
+  
+  .leaderboard-section {
+    animation: neonRedPulse 3s ease-in-out infinite;
+    border: 2px solid #ff1a75;
+    background-color: #ff93b3;
+    padding: 1rem;
+    border-radius: 10px;
+    /* background-color: rgba(255, 255, 255, 0.05); */
+    margin-right: 10vw; /* Push it slightly left from far right */
+    max-height: 700px; /* Reduce height */
+  }
+
+  /* Ensure text stays clean and non-glowing */
+  .leaderboard-section h2,
+  .leaderboard-header,
+  .leaderboard-list li {
+    color: #fff;
+    text-shadow: none;
+  }
+
+  /* Hover-enhanced effect */
+.leaderboard-section:hover {
+    box-shadow:
+      0 0 10px #ff1a75,
+      0 0 25px #ff1a75,
+      0 0 45px #ff1a75,
+      0 0 60px #ff1a75;
+  }
+  
+  input[type="text"] {
+    background-color: white;            /* White input box */
+    color: #ff1493;                     /* Pink text */
+    border: 2px solid #ff1493;          /* Optional pink border */
+    border-radius: 8px;
+    padding: 0.5rem 1rem;
+    font-family: inherit;
+    width: 45%;
+    font-size: 1rem;
+  }
+  
+  input[type="text"]::placeholder {
+    color: #ff69b4;                     /* Lighter pink placeholder */
+    opacity: 1;                         /* Ensures placeholder is visible */
+  }
+  
+  .start-button-wrapper {
+    display: flex;
+    justify-content: center;
+    margin: 2rem 0;
+  }
+  
+  .welcome-popup {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: white;
+    border: 2px solid #ff1493;
+    color: #ff1493;
+    font-weight: bold;
+    padding: 1.5rem 3rem;
+    border-radius: 12px;
+    z-index: 1000;
+    font-size: 1.2rem;
+    animation: fadeOut 3s forwards;
+    text-align: center;
+    box-shadow: 0 0 15px rgba(255, 20, 147, 0.3);
+  }
+  
+  @keyframes fadeOut {
+    0% { opacity: 1; }
+    80% { opacity: 1; }
+    100% { opacity: 0; }
+  }
+  
+  .team-list {
+    overflow-y: auto;
+    max-height: 300px;
+    margin-top: 1rem;
+    padding-right: 5px; /* for scroll visibility */
+  }
+  
+/*scroll for leaderbaord*/
+/* .leaderboard-section ul { 
+    overflow-y: auto;
+    max-height: 300px;
+    padding-right: 5px;
+  } */
+
+  /* Ensure scrollbar is visible on WebKit browsers (Chrome, Safari) */
+.team-list::-webkit-scrollbar,
+.leaderboard-section ul::-webkit-scrollbar {
+  width: 6px;
+}
+
+.team-list::-webkit-scrollbar-thumb,
+.leaderboard-section ul::-webkit-scrollbar-thumb {
+  background-color: rgba(255, 20, 147, 0.5);
+  border-radius: 3px;
+}
+
+/* Keep "Begin Game" always at bottom */
+.start-button-wrapper {
+  margin-top: auto;
+  padding-top: 1rem;
+}
