@@ -277,7 +277,7 @@ body {
     margin-top: 1rem;
     padding-right: 5px; /* for scroll visibility */
   }
-  
+
 /*scroll for leaderbaord*/
 /* .leaderboard-section ul { 
     overflow-y: auto;
@@ -302,3 +302,21 @@ body {
   margin-top: auto;
   padding-top: 1rem;
 }
+
+/* Scrollable list for leaderboard */
+.leaderboard-list-wrapper {
+    overflow-y: auto;
+    max-height: 550px;
+    padding-right: 5px;
+  }
+  
+  /* Optional: Match team-list scrollbar style */
+  .leaderboard-list-wrapper::-webkit-scrollbar {
+    width: 6px;
+  }
+  
+  .leaderboard-list-wrapper::-webkit-scrollbar-thumb {
+    background-color: rgba(255, 20, 147, 0.5);
+    border-radius: 3px;
+  }
+  

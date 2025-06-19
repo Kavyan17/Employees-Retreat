@@ -58,7 +58,7 @@ const AddTeams = () => {
       )}
       
       <header className="addteams-header">
-        Employees Retreat - Love Edition 💌
+          Marriage Retreat - Love Edition 💌
       </header>
 
       <main className="addteams-main">
@@ -99,16 +99,17 @@ const AddTeams = () => {
             <span className="team-col">Team Name</span>
             <span className="score-col">Score</span>
           </div>
-          <ul>
-            {teams.map((team) => (
-              <li key={team.id}>
-                <strong>{team.name}</strong> <strong>0</strong>
-              </li>
-            ))}
-          </ul>
+          <div className="leaderboard-list-wrapper">
+            <ul>
+              {teams.map((team) => (
+                <li key={team.id}>
+                  <strong>{team.name}</strong> <strong>0</strong>
+                </li>
+              ))}
+            </ul>
+          </div>
         </div>
       </main>
-
       <footer className="addteams-footer">
         ❤️ Crafted with love — Because love deserves a little fun! ❤️
       </footer>

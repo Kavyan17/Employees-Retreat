@@ -7,7 +7,7 @@ const Home = () => {
     return (
       <div className="home-container">
         <header className="home-header">
-            Employees Retreat - Love Edition 💌 
+            Marriage Retreat - Love Edition 💌 
         </header>
   
         <main className="home-main">
@@ -38,7 +38,7 @@ const Home = () => {
 
 
         <div className="jumbotron">
-            <h2 className="jumbotron-title">✨ Luke 9:23 Ministries Presents ✨</h2>
+            <h2 className="jumbotron-title">✨ Neighbors House Presents ✨</h2>
             <p className="jumbotron-text">💖 Couple Compatibility Quiz 💖</p>
         </div>
           {/* <h2 className="home-subheading">Luke 9:23 Ministries</h2>
