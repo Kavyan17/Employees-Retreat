@@ -1,77 +1,147 @@
-.flashcard-container {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: flex-start;
-    background: linear-gradient(to right, #ff69b4, #ff1493);
-    min-height: 100vh;
-    padding: 2rem;
-    font-family: 'Comic Sans MS', cursive, sans-serif;
-    color: #fff;
+body {
+  margin: 0;
+  font-family: 'Comic Sans MS', cursive, sans-serif;
+  background: linear-gradient(to right, #ff69b4, #ff1493);
+  color: #fff;
+  min-height: 100vh;
+  overflow-x: hidden;
+}
+
+.flashcard-container  {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  min-height: 100vh;
+}
+
+.flashcard-header,
+.flashcard-footer {
+  width: 100vw;
+  padding: 1rem;
+  background-color: #ff1493;
+  text-align: center;
+  font-weight: bold;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.2);
+}
+
+.flashcard-footer {
+  background-color: #ff69b4;
+  box-shadow: 0 -2px 6px rgba(0,0,0,0.2);
+  font-size: 0.95rem;
+}
+
+.flashcard-main-content {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  padding: 2rem;
+  gap: 8rem;
+}
+
+.questions-container{
+  width: 30%;
+  background: rgba(255, 255, 255, 0.15);
+  padding: 2rem;
+  border-radius: 12px;
+  box-shadow: 0 8px 20px rgba(255, 255, 255, 0.2);
+  animation: neonRedPulse 3s ease-in-out infinite;
+  border: 2px solid #ff1a75;
+  background-color: #ff93b3;
+  max-height: 700px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  margin-right: 0; /* removed */
+}
+
+.questions-container{
+  animation: neonRedPulse 3s ease-in-out infinite;
+  border: 2px solid #ff1a75;
+  background-color: #ff93b3;
+  padding: 1rem;
+  border-radius: 10px;
+  /* background-color: rgba(255, 255, 255, 0.05); */
+  margin-right: 10vw; /* Push it slightly left from far right */
+  max-height: 700px; /* Reduce height */
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+@keyframes neonRedPulse {
+  0%, 100% {
+    box-shadow: 0 0 5px #ff1a75, 0 0 10px #ff1a75, 0 0 15px #ff1a75;
+    border-color: #ff1a75;
   }
-  
-  .flashcard {
-    background-color: #fff0f5;
-    color: #d0006f;
-    padding: 2rem;
-    border-radius: 2rem;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
-    width: 80%;
-    text-align: center;
-    margin-bottom: 2rem;
-    animation: fadeIn 0.5s ease-in-out;
+  50% {
+    box-shadow: 0 0 15px #ff1a75, 0 0 30px #ff1a75, 0 0 45px #ff1a75;
+    border-color: #ff1a75;
   }
-  
-  .team-inputs {
-    width: 100%;
-    max-width: 600px;
-    display: flex;
-    flex-direction: column;
-    gap: 1rem;
-  }
-  
-  .team-answer label {
-    font-weight: bold;
-    margin-right: 0.5rem;
-  }
-  
-  .team-answer input {
-    width: 100%;
-    padding: 0.5rem 1rem;
-    border: 2px solid #fff;
-    border-radius: 1rem;
-    background-color: #ffe6f0;
-    color: #d0006f;
-    font-size: 1rem;
-    outline: none;
-  }
-  
-  .lock-btn, .next-btn {
-    margin-top: 2rem;
-    padding: 0.75rem 2rem;
-    background-color: #fff;
-    color: #d0006f;
-    font-weight: bold;
-    font-size: 1.1rem;
-    border: none;
-    border-radius: 2rem;
-    cursor: pointer;
-    transition: transform 0.2s, background-color 0.3s;
-  }
-  
-  .lock-btn:hover, .next-btn:hover {
-    transform: scale(1.05);
-    background-color: #ffd1ec;
-  }
-  
-  .loading, .game-over {
-    font-size: 2rem;
-    margin-top: 4rem;
-    color: white;
-    text-shadow: 1px 1px 4px #ff1493;
-  }
-  
-  @keyframes fadeIn {
-    from { opacity: 0; transform: translateY(-10px); }
-    to { opacity: 1; transform: translateY(0); }
-  }
+}  
+
+.team-inputs {
+  overflow-y: auto;
+  max-height: 300px;
+  /* margin-top: 1rem; */
+  padding-right: 5px; /* for scroll visibility */
+}
+
+/* Ensure scrollbar is visible on WebKit browsers (Chrome, Safari) */
+.team-inputs::-webkit-scrollbar,
+.leaderboard-section ul::-webkit-scrollbar {
+width: 6px;
+}
+
+.team-inputs::-webkit-scrollbar-thumb,
+.leaderboard-section ul::-webkit-scrollbar-thumb {
+background-color: rgba(255, 20, 147, 0.5);
+border-radius: 3px;
+}
+
+/* Keep "Begin Game" always at bottom */
+.start-button-wrapper {
+margin-top: auto;
+padding-top: 1rem;
+}
+
+.question-box h2{
+  color: #ff1493;
+}
+
+.question-box {
+  background-color: white;
+  color: #ff1493;
+  padding: 1rem;
+  border-radius: 12px;
+  text-align: center;
+  /* margin-bottom: 1rem; */
+  font-weight: bold;
+  box-shadow: 0 0 10px rgba(255, 255, 255, 0.2);
+}
+
+.team-answer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem; /* Ensures space between label and input */
+  margin-bottom: 1rem; /* for vertical spacing too */
+}
+
+/* Scrollable list for leaderboard */
+.leaderboard-list-wrapper {
+  overflow-y: auto;
+  max-height: 550px;
+  padding-right: 5px;
+}
+
+/* Optional: Match team-list scrollbar style */
+.leaderboard-list-wrapper::-webkit-scrollbar {
+  width: 6px;
+}
+
+.leaderboard-list-wrapper::-webkit-scrollbar-thumb {
+  background-color: rgba(255, 20, 147, 0.5);
+  border-radius: 3px;
+}
+
+
