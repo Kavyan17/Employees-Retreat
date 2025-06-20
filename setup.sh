@@ -37,7 +37,7 @@ source venv/bin/activate
 pip3 install -r requirements.txt
 
 echo "🧹 Resetting database..."
-python3 app/reset_db.py || { echo "❌ Failed to run reset_db.py"; deactivate; exit 1; }
+python3 -m app.reset_db || { echo "❌ Failed to run reset_db.py"; deactivate; exit 1; }
 
 # Start Flask backend in background
 echo "🚀 Starting Flask backend..."
