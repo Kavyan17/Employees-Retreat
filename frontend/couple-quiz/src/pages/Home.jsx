@@ -13,7 +13,7 @@ const Home = () => {
         <main className="home-main">
         <div className="center-wrapper">
         <div className="floating-hearts">
-            {[...Array(50)].map((_, i) => (
+            {[...Array(100)].map((_, i) => (
               <svg
                 key={i}
                 className="heart"

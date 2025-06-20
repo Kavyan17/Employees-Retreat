@@ -4,6 +4,8 @@ import { parseCSVFile } from '../utils/parseCSV';
 import axios from 'axios';
 import '../styles/Flashcards.css';
 import '../styles/Home.css';
+import confetti from 'canvas-confetti';
+
 
 const Flashcards = () => {
   const location = useLocation();
@@ -16,13 +18,62 @@ const Flashcards = () => {
   const [phaseTwo, setPhaseTwo] = useState(false);
   const [revealedAnswers, setRevealedAnswers] = useState({});
   const [scores, setScores] = useState({});
+  const [matchMessages, setMatchMessages] = useState({});
+  const [matchMessagesPool, setMatchMessagesPool] = useState([]);
+  const [noMatchMessagesPool, setNoMatchMessagesPool] = useState([]);
 
 
   useEffect(() => {
     parseCSVFile('/data/questions.csv', (data) => {
+      console.log("✅ Loaded questions:", data);
       setQuestions(data);
     });
+  
+    parseCSVFile('/data/match_messages.csv', (data) => {
+      const messages = data.map(row => row.message);
+      console.log("✅ Loaded match messages:", messages);
+      setMatchMessagesPool(messages);
+    });
+  
+    parseCSVFile('/data/no_match_messages.csv', (data) => {
+      const messages = data.map(row => row.message);
+      console.log("✅ Loaded no-match messages:", messages);
+      setNoMatchMessagesPool(messages);
+    });
   }, []);
+   
+  
+
+  useEffect(() => {
+    const canvas = document.createElement('canvas');
+    canvas.style.position = 'fixed';
+    canvas.style.top = '0';
+    canvas.style.left = '0';
+    canvas.style.width = '100%';
+    canvas.style.height = '100%';
+    canvas.style.pointerEvents = 'none';
+    canvas.style.zIndex = '2000';
+    document.body.appendChild(canvas);
+    const myConfetti = confetti.create(canvas, { resize: true, useWorker: true });
+  
+    if (Object.values(matchMessages).some(msg => msg.type === 'match')) {
+      myConfetti({
+        particleCount: 100,
+        spread: 70,
+        origin: { y: 0.5 },
+      });
+  
+      setTimeout(() => {
+        document.body.removeChild(canvas);
+      }, 3000);
+    }
+  
+    return () => {
+      if (document.body.contains(canvas)) {
+        document.body.removeChild(canvas);
+      }
+    };
+  }, [matchMessages]);  
 
   const handleChange = (teamId, value) => {
     setAnswers({ ...answers, [teamId]: value });
@@ -44,6 +95,7 @@ const Flashcards = () => {
     setAnswers({});
     setLocked(false);
     setRevealedAnswers({});
+    setMatchMessages({});
     setCurrentIndex((prev) => prev + 1);
   };
 
@@ -64,11 +116,32 @@ const Flashcards = () => {
     setRevealedAnswers(prev => ({ ...prev, [teamId]: answer ? answer.answer : "No Answer" }));
   };
 
+
+  const getRandomMessage = (arr) => arr[Math.floor(Math.random() * arr.length)];
+
   const markMatch = (teamId, match) => {
     if (match) {
       setScores(prev => ({ ...prev, [teamId]: prev[teamId] + 1 }));
+      const randomMatchMsg = getRandomMessage(matchMessagesPool);
+      setMatchMessages(prev => ({
+        ...prev,
+        [teamId]: {
+          type: 'match',
+          text: randomMatchMsg
+        }
+      }));
+    } else {
+      const randomNoMatchMsg = getRandomMessage(noMatchMessagesPool);
+      setMatchMessages(prev => ({
+        ...prev,
+        [teamId]: {
+          type: 'no-match',
+          text: randomNoMatchMsg
+        }
+      }));
     }
-  };
+  };  
+
 
   if (!questions.length) return <div className="loading">Loading questions...</div>;
 
@@ -82,7 +155,7 @@ const Flashcards = () => {
         <main className="home-main">
           <div className="center-wrapper">
             <div className="floating-hearts">
-              {[...Array(50)].map((_, i) => (
+              {[...Array(100)].map((_, i) => (
                 <svg
                   key={i}
                   className="heart"
@@ -156,7 +229,6 @@ const Flashcards = () => {
       </div>
     );
   }  
-    
 
   const currentQuestion = questions[currentIndex];
 
@@ -200,8 +272,8 @@ const Flashcards = () => {
           ) : (
             <>
               <div className="question-box">
-                  <h2>🗣️ Phase 2 - Verbal Round</h2>
-                  <p>{currentQuestion.question_text}</p>
+                <h2>💖 Phase 2 - Question {currentIndex + 1}</h2>
+                <p>{currentQuestion.question_text}</p>
               </div>
               <div className="team-inputs">
                 {teams.map((team) => (
@@ -209,13 +281,13 @@ const Flashcards = () => {
                     <label>{team.name}:</label>
                     {!revealedAnswers[team.id] ? (
                       <button onClick={() => revealAnswer(team.id)}>👁 Reveal Answer</button>
-                    ) : (
+                    ) : !matchMessages[team.id] ? (
                       <>
                         <p>Original Answer: {revealedAnswers[team.id]}</p>
                         <button onClick={() => markMatch(team.id, true)}>✅ Match</button>
                         <button onClick={() => markMatch(team.id, false)}>❌ No Match</button>
                       </>
-                    )}
+                    ) : null}
                   </div>
                 ))}
               </div>
@@ -225,22 +297,27 @@ const Flashcards = () => {
             </>
           )}
         </div>
-  
-        {/* Right container: Leaderboard */}
-        {/* <div className="addteams-container right-container">
-          {(currentIndex >= questions.length || phaseTwo) && (
-            <>
-              <h2>🏆 Leaderboard</h2>
-              <ul>
-                {teams.map((team) => (
-                  <li key={team.id}>
-                    {team.name}: {scores[team.id] || 0}
-                  </li>
+
+        {/* Match/No-Match Messages */}
+        {/* {Object.values(matchMessages).map((msg, index) => (
+          <div key={index} className={`match-message ${msg.type}`}>
+            {msg.type === 'match' && (
+              <div className="confetti-wrapper">
+                {[...Array(100)].map((_, i) => (
+                  <div key={i} className="confetti-piece" />
                 ))}
-              </ul>
-            </>
-          )}
-        </div> */}
+              </div>
+            )}
+            <div className="welcome-popup"><p>{msg.text}</p></div>
+          </div>
+        ))} */}
+        {/* Match/No-Match Messages */}
+        {Object.values(matchMessages).map((msg, index) => (
+          <div key={index} className={`match-message ${msg.type}`}>
+            <div className="welcome-popup"><p>{msg.text}</p></div>
+          </div>
+        ))}
+
         <div className="leaderboard-section">
           <h2>Leaderboard</h2>
           <div className="leaderboard-header">
@@ -251,7 +328,7 @@ const Flashcards = () => {
             <ul>
               {teams.map((team) => (
                 <li key={team.id}>
-                  <strong>{team.name}</strong> <strong>0</strong>
+                  <strong>{team.name}</strong> <strong>{scores[team.id] || 0}</strong>
                 </li>
               ))}
             </ul>
@@ -266,4 +343,4 @@ const Flashcards = () => {
   );    
 };
 
-export default Flashcards;
+export default Flashcards; 
