@@ -5,6 +5,7 @@ import axios from 'axios';
 import '../styles/Flashcards.css';
 import '../styles/Home.css';
 import confetti from 'canvas-confetti';
+import { useRef } from 'react';
 
 
 const Flashcards = () => {
@@ -21,6 +22,9 @@ const Flashcards = () => {
   const [matchMessages, setMatchMessages] = useState({});
   const [matchMessagesPool, setMatchMessagesPool] = useState([]);
   const [noMatchMessagesPool, setNoMatchMessagesPool] = useState([]);
+  const [highlightTeamId, setHighlightTeamId] = useState(null);
+  const [finalMessage, setFinalMessage] = useState("");
+
 
 
   useEffect(() => {
@@ -43,20 +47,62 @@ const Flashcards = () => {
   }, []);
    
   
+  const previousMatchTeamIds = useRef(new Set());
+  // useEffect(() => {
+  //   const canvas = document.createElement('canvas');
+  //   canvas.style.position = 'fixed';
+  //   canvas.style.top = '0';
+  //   canvas.style.left = '0';
+  //   canvas.style.width = '100%';
+  //   canvas.style.height = '100%';
+  //   canvas.style.pointerEvents = 'none';
+  //   canvas.style.zIndex = '2000';
+  //   document.body.appendChild(canvas);
+  //   const myConfetti = confetti.create(canvas, { resize: true, useWorker: true });
+  
+  //   if (Object.values(matchMessages).some(msg => msg.type === 'match')) {
+  //     myConfetti({
+  //       particleCount: 100,
+  //       spread: 70,
+  //       origin: { y: 0.5 },
+  //     });
+  
+  //     setTimeout(() => {
+  //       document.body.removeChild(canvas);
+  //     }, 3000);
+  //   }
+  
+  //   return () => {
+  //     if (document.body.contains(canvas)) {
+  //       document.body.removeChild(canvas);
+  //     }
+  //   };
+  // }, [matchMessages]);  
 
   useEffect(() => {
-    const canvas = document.createElement('canvas');
-    canvas.style.position = 'fixed';
-    canvas.style.top = '0';
-    canvas.style.left = '0';
-    canvas.style.width = '100%';
-    canvas.style.height = '100%';
-    canvas.style.pointerEvents = 'none';
-    canvas.style.zIndex = '2000';
-    document.body.appendChild(canvas);
-    const myConfetti = confetti.create(canvas, { resize: true, useWorker: true });
+    const currentMatchTeamIds = new Set(
+      Object.entries(matchMessages)
+        .filter(([_, msg]) => msg.type === 'match')
+        .map(([teamId]) => teamId)
+    );
   
-    if (Object.values(matchMessages).some(msg => msg.type === 'match')) {
+    const newMatchTeamIds = [...currentMatchTeamIds].filter(
+      id => !previousMatchTeamIds.current.has(id)
+    );
+  
+    if (newMatchTeamIds.length > 0) {
+      const canvas = document.createElement('canvas');
+      canvas.style.position = 'fixed';
+      canvas.style.top = '0';
+      canvas.style.left = '0';
+      canvas.style.width = '100%';
+      canvas.style.height = '100%';
+      canvas.style.pointerEvents = 'none';
+      canvas.style.zIndex = '2000';
+      document.body.appendChild(canvas);
+  
+      const myConfetti = confetti.create(canvas, { resize: true, useWorker: true });
+  
       myConfetti({
         particleCount: 100,
         spread: 70,
@@ -66,14 +112,32 @@ const Flashcards = () => {
       setTimeout(() => {
         document.body.removeChild(canvas);
       }, 3000);
-    }
   
-    return () => {
-      if (document.body.contains(canvas)) {
-        document.body.removeChild(canvas);
-      }
-    };
-  }, [matchMessages]);  
+      // Update ref after triggering confetti
+      previousMatchTeamIds.current = new Set([...previousMatchTeamIds.current, ...newMatchTeamIds]);
+    }
+  }, [matchMessages]);
+
+  useEffect(() => {
+    if (currentIndex >= questions.length && phaseTwo) {
+      // Confetti burst
+      confetti({
+        particleCount: 300,
+        spread: 160,
+        origin: { y: 0.5 }
+      });
+  
+      // Voice announcement
+      announceWinner();
+  
+      // Display overlay message
+      setFinalMessage(`And the winner is… ${getTopTeamName()}! 🏆`);
+  
+      // Remove after 5 seconds
+      setTimeout(() => setFinalMessage(""), 5000);
+    }
+  }, [currentIndex, phaseTwo]);  
+
 
   const handleChange = (teamId, value) => {
     setAnswers({ ...answers, [teamId]: value });
@@ -97,6 +161,7 @@ const Flashcards = () => {
     setRevealedAnswers({});
     setMatchMessages({});
     setCurrentIndex((prev) => prev + 1);
+    previousMatchTeamIds.current = new Set(); 
   };
 
   const enterPhaseTwo = () => {
@@ -116,12 +181,54 @@ const Flashcards = () => {
     setRevealedAnswers(prev => ({ ...prev, [teamId]: answer ? answer.answer : "No Answer" }));
   };
 
+  const getTopTeamName = () => {
+    const sorted = [...teams].sort((a,b) => (scores[b.id]||0) - (scores[a.id]||0));
+    return sorted[0]?.name || "";
+  };
+  
+  const announceWinner = () => {
+    if ('speechSynthesis' in window) {
+      const winner = getTopTeamName();
+      const msg = new SpeechSynthesisUtterance(`And the winner is ${winner}`);
+      window.speechSynthesis.speak(msg);
+    }
+  };
+  
 
   const getRandomMessage = (arr) => arr[Math.floor(Math.random() * arr.length)];
 
+  // const markMatch = (teamId, match) => {
+  //   if (match) {
+  //     setScores(prev => ({ ...prev, [teamId]: prev[teamId] + 1 }));
+  //     const randomMatchMsg = getRandomMessage(matchMessagesPool);
+  //     setMatchMessages(prev => ({
+  //       ...prev,
+  //       [teamId]: {
+  //         type: 'match',
+  //         text: randomMatchMsg
+  //       }
+  //     }));
+  //   } else {
+  //     const randomNoMatchMsg = getRandomMessage(noMatchMessagesPool);
+  //     setMatchMessages(prev => ({
+  //       ...prev,
+  //       [teamId]: {
+  //         type: 'no-match',
+  //         text: randomNoMatchMsg
+  //       }
+  //     }));
+  //   }
+  // };  
+
   const markMatch = (teamId, match) => {
     if (match) {
-      setScores(prev => ({ ...prev, [teamId]: prev[teamId] + 1 }));
+      setScores(prev => {
+        const newScores = { ...prev, [teamId]: (prev[teamId] || 0) + 1 };
+        setHighlightTeamId(teamId);
+        // Clear highlight after animation duration (e.g. 1.5s)
+        setTimeout(() => setHighlightTeamId(null), 1500);
+        return newScores;
+      });
       const randomMatchMsg = getRandomMessage(matchMessagesPool);
       setMatchMessages(prev => ({
         ...prev,
@@ -212,17 +319,31 @@ const Flashcards = () => {
             <div className="jumbotron">
               <h2 className="jumbotron-title">🏆 Final Leaderboard 🏆</h2>
               <ul className="leaderboard-list">
-                {teams.map(team => (
+                {/* {teams.map(team => (
                   <li key={team.id}>
                     <strong>{team.name}</strong>: {scores[team.id]}
                   </li>
-                ))}
+                ))} */}
+                {[...teams]
+                  .sort((a, b) => (scores[b.id] || 0) - (scores[a.id] || 0))
+                  .map((team) => (
+                    <li
+                      key={team.id}
+                      className={`leaderboard-item ${team.id === highlightTeamId ? 'highlight' : ''}`}
+                    >
+                      <strong>{team.name}</strong>: {scores[team.id] || 0}
+                    </li>
+              ))}
               </ul>
               <p className="jumbotron-text">💖 Your love story just leveled up 💖</p>
             </div>
           </div>
         </main>
-  
+        {finalMessage && (
+        <div className="final-popup">
+          {finalMessage}
+        </div>
+      )}
         <footer className="home-footer">
           ❤️ Crafted with love — Because love deserves a little fun! ❤️
         </footer>
@@ -283,11 +404,11 @@ const Flashcards = () => {
                       <button onClick={() => revealAnswer(team.id)}>👁 Reveal Answer</button>
                     ) : !matchMessages[team.id] ? (
                       <>
-                        <p>Original Answer: {revealedAnswers[team.id]}</p>
+                        <p>Answer: {revealedAnswers[team.id]}</p>
                         <button onClick={() => markMatch(team.id, true)}>✅ Match</button>
                         <button onClick={() => markMatch(team.id, false)}>❌ No Match</button>
                       </>
-                    ) : null}
+                    ) : <p>{revealedAnswers[team.id]}</p>}
                   </div>
                 ))}
               </div>
@@ -314,7 +435,7 @@ const Flashcards = () => {
         {/* Match/No-Match Messages */}
         {Object.values(matchMessages).map((msg, index) => (
           <div key={index} className={`match-message ${msg.type}`}>
-            <div className="welcome-popup"><p>{msg.text}</p></div>
+            <p>{msg.text}</p>
           </div>
         ))}
 
@@ -325,12 +446,26 @@ const Flashcards = () => {
             <span className="score-col">Score</span>
           </div>
           <div className="leaderboard-list-wrapper">
-            <ul>
-              {teams.map((team) => (
-                <li key={team.id}>
-                  <strong>{team.name}</strong> <strong>{scores[team.id] || 0}</strong>
-                </li>
-              ))}
+          {/* <ul>
+                    {[...teams]
+                      .sort((a, b) => (scores[b.id] || 0) - (scores[a.id] || 0))
+                      .map((team) => (
+                        <li key={team.id} className="leaderboard-item">
+                          <strong>{team.name}</strong> {scores[team.id] || 0}
+                        </li>
+                      ))}
+           </ul> */}
+           <ul>
+                {[...teams]
+                  .sort((a, b) => (scores[b.id] || 0) - (scores[a.id] || 0))
+                  .map((team) => (
+                    <li
+                      key={team.id}
+                      className={`leaderboard-item ${team.id === highlightTeamId ? 'highlight' : ''}`}
+                    >
+                      <strong>{team.name}</strong>: {scores[team.id] || 0}
+                    </li>
+                  ))}
             </ul>
           </div>
         </div>
