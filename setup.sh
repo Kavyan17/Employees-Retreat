@@ -59,7 +59,7 @@ echo "📦 Installing frontend dependencies..."
 npm install || { echo "❌ npm install failed"; kill $BACKEND_PID; exit 1; }
 
 echo "🚀 Starting React frontend..."
-npm start &
+npm run dev &
 
 FRONTEND_PID=$!
 
